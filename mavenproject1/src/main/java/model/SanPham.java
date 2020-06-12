@@ -9,12 +9,19 @@ package model;
  *
  * @author Duong
  */
-public class SanPham extends MatHang{
+public class SanPham extends MatHang {
+
     private int idSanPham;
     private int gia;
     private String hanSuDung;
-    private MatHang MatHang;
     private BienLaiKho BienLaiKho;
+
+    public SanPham(MatHang mh) {
+        this.setMaMatHang(mh.getMaMatHang());
+        this.setDonViTinh(mh.getDonViTinh());
+        this.setMoTa(mh.getMoTa());
+        this.setTenMatHang(mh.getTenMatHang());
+    }
 
     public SanPham() {
     }
@@ -43,14 +50,7 @@ public class SanPham extends MatHang{
         this.hanSuDung = hanSuDung;
     }
 
-    public MatHang getMatHang() {
-        return MatHang;
-    }
-
-    public void setMatHang(MatHang MatHang) {
-        this.MatHang = MatHang;
-    }
-
+  
     public BienLaiKho getBienLaiKho() {
         return BienLaiKho;
     }
@@ -59,10 +59,4 @@ public class SanPham extends MatHang{
         this.BienLaiKho = BienLaiKho;
     }
 
-    
-
-   
-
-  
-    
 }

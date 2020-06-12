@@ -24,7 +24,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.UIManager;
 import javax.swing.*;
 import java.util.*;
@@ -53,8 +55,11 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
     private ArrayList<NhanVien> listNV;
     private NhanVien nvSelected;
     private ArrayList<MatHang> listMatHang;
-    private ArrayList<MatHang> listMatHangSearch;
-    private ArrayList<BienLaiNhap> listBienLaiNhap;
+    private ArrayList<MatHang> listMatHangSearch=new ArrayList<>();
+    private int donGia;
+        private Map<SanPham,Integer> listMatHangDaChon=new HashMap<SanPham, Integer>() ;
+    
+
     public GDNhapHangFrm() {
         initComponents();
         loadNCC();
@@ -93,6 +98,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
             public void focusLost(FocusEvent e) {
                 try {
                     if (!field.getText().equals("")) {
+                        
                         DecimalFormat df = new DecimalFormat("#,##0");
                         String s = df.format(new BigDecimal(field.getText()));
                         field.setText(s);
@@ -303,7 +309,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         jTextFieldDonGia = new javax.swing.JTextField();
         JButtonThem = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jDateChooserHanSd = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -560,7 +566,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "", "Mã hàng", "Tên hàng", "ĐVT", "Số lượng"
+                "", "Mã hàng", "Tên hàng", "ĐVT", "Mô tả"
             }
         ) {
             Class[] types = new Class [] {
@@ -578,6 +584,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableDanhSachMH.setColumnSelectionAllowed(true);
         jTableDanhSachMH.setRowMargin(3);
         jTableDanhSachMH.setSelectionForeground(new java.awt.Color(102, 255, 255));
         jTableDanhSachMH.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -646,7 +653,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel25.setText("Hạn sử dụng");
 
-        jDateChooser1.setDateFormatString("dd/MM/yyyy\n");
+        jDateChooserHanSd.setDateFormatString("dd/MM/yyyy\n");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -677,7 +684,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel25)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jDateChooserHanSd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -698,7 +705,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooserHanSd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel25))
                 .addGap(46, 46, 46)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -757,7 +764,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "", "Mã hàng", "Mã sẵn có", "Tên mặt hàng", "ĐVT", "Số lượng", "Đơn giá", "Thành tiền"
+                "", "Mã hàng", "Tên mặt hàng", "Hạn sử dụng", "ĐVT", "Số lượng", "Đơn giá", "Thành tiền"
             }
         ) {
             Class[] types = new Class [] {
@@ -1044,7 +1051,14 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         String donGia = jTextFieldDonGia.getText();
         boolean check = true;
         int row = jTableDanhSachMH.getSelectedRow();
-
+        int soLuong = (int) jSpinnerSoLuong.getValue();
+         String hsd ="";
+        try {
+           hsd=((JTextField)jDateChooserHanSd.getDateEditor().getUiComponent()).getText();
+        } catch (Exception e) {
+            System.out.println("hsd chua duoc chon");
+            e.printStackTrace();
+        }
         if (row == -1) {
             check = false;
             JOptionPane.showMessageDialog(null, "Chọn mặt hàng bạn muốn thêm!", "cảnh báo chọn mặt hàng", JOptionPane.WARNING_MESSAGE);
@@ -1054,12 +1068,16 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(jTextFieldDonGia, "Điền giá mặt hàng bạn đã chọn!", "cảnh báo điền giá", JOptionPane.WARNING_MESSAGE);
             jTextFieldDonGia.requestFocus();
         }
-        MatHang matHangThem ;
-        if (!listMatHangSearch.isEmpty()) {
-             matHangThem = listMatHangSearch.get(row);
+        MatHang matHangThem;
+        if (listMatHangSearch.size()!=0) {
+            matHangThem = listMatHangSearch.get(row);
         } else {
-             matHangThem = listMatHang.get(row);
+            matHangThem = listMatHang.get(row);
         }
+        SanPham sp=new SanPham(matHangThem);
+        sp.setHanSuDung(hsd);
+        sp.setGia(donGia);
+        listMatHangDaChon.put(sp,)
     }//GEN-LAST:event_JButtonThemActionPerformed
 
     /**
@@ -1125,7 +1143,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxKho;
     private javax.swing.JComboBox<String> jComboBoxNcc;
     private javax.swing.JComboBox<String> jComboBoxNhanVien;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooserHanSd;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

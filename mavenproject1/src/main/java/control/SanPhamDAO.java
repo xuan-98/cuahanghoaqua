@@ -42,7 +42,6 @@ public class SanPhamDAO extends DAO{
                 hang.setIdMatHang(rs.getInt(4));
                 BienLaiKho bienLaiKho=new BienLaiKho();
                 bienLaiKho.setId(rs.getInt(5));
-                sp.setMatHang(hang);
                 sp.setBienLaiKho(bienLaiKho);
                 listSanPham.add(sp);
             }
@@ -64,7 +63,7 @@ public class SanPhamDAO extends DAO{
         ResultSet rs = null;
         String gia = "N'" + sp.getGia()+ "',";
         String hanSd = "N'" + sp.getHanSuDung()+ "',";
-        String idMatHang = "N'" + sp.getMatHang().getIdMatHang()+ "',";
+        String idMatHang = "N'" + sp.getIdMatHang()+ "',";
         String idBienLaiKho = "N'" + sp.getBienLaiKho().getId()+ "'";
         String sql = "insert into [CuaHangHoaQua].[dbo].[SanPham] (gia,hanSuDung,idMatHang,idBienLaiKho)"
                 + " values(" + gia + hanSd + idMatHang + idBienLaiKho + ")";
