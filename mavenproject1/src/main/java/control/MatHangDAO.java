@@ -35,6 +35,7 @@ public class MatHangDAO extends DAO {
                 mh.setMaMatHang(rs.getString(2));
                 mh.setTenMatHang(rs.getString(3));
                 mh.setMoTa(rs.getString(4));
+                mh.setDonViTinh(rs.getString(5));
                 listMatHang.add(mh);
             }
             con.close();

@@ -67,7 +67,62 @@ public class BienLaiNhapDAO extends DAO {
         return listBienLaiNhap;
     }
 
-    public boolean themBienLaiNhap(BienLaiNhap bienLaiNhap) {
+    public boolean themBienLaiNhapCongNo(BienLaiNhap bienLaiNhap) {
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String idBienLaiNhap = "'" + bienLaiNhap.getIdBienLaiNhap() + "',";
+        String idBienLaiKho = "'" + bienLaiNhap.getId() + "',";//get id bien lai kho
+        String idHopDong = "'" + bienLaiNhap.getHopDong().getId() + "',";
+        String idNhanVien = "'" + bienLaiNhap.getNhanVien().getIdNhanVien() + "'";
+        String maBienLaiKho = "N'" + bienLaiNhap.getMaBienLai() + "',";
+        String ngayLap = "N'" + bienLaiNhap.getNgayLap() + "',";
+        String soLuong = "N'" + bienLaiNhap.getSoLuong() + "'";
+        String idKho = "N'" + bienLaiNhap.getKho().getId() + "',";
+
+        try {
+            String sql3 = "select idBienLaiKho from [CuaHangHoaQua].[dbo].[BienLaiKho]";
+            stm = con.prepareStatement(sql3);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                idBienLaiKho = "'" + (rs.getInt("idBienLaiKho")+1) + "',";
+            }
+            String sql = "insert into [CuaHangHoaQua].[dbo].[BienLaiNhap] (idBienLaiKho,idHopDong,idNhanVien)"
+                    + " values(" + idBienLaiKho + idHopDong + idNhanVien + ")";
+            String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong)"
+                    + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + ")";
+            con.setAutoCommit(false);
+            stm = con.prepareStatement(sql2);
+            stm.executeUpdate();
+            con.commit();
+            stm = con.prepareStatement(sql);
+            stm.executeUpdate();
+            con.commit();
+            con.close();
+            stm.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                if (con != null) {
+                    con.rollback();
+                    System.out.println("roll back...BienLaiNhapDAO");
+                }
+            } catch (SQLException ex2) {
+                ex2.printStackTrace();
+            }
+            return false;
+        } finally {
+            try {
+                stm.close();
+                con.close();
+            } catch (SQLException ex3) {
+                //
+                ex3.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    public boolean themBienLaiNhapPhieuThuChi(BienLaiNhap bienLaiNhap) {
         PreparedStatement stm = null;
         ResultSet rs = null;
         String idBienLaiNhap = "'" + bienLaiNhap.getIdBienLaiNhap() + "',";
@@ -78,12 +133,12 @@ public class BienLaiNhapDAO extends DAO {
         String maBienLaiKho = "N'" + bienLaiNhap.getMaBienLai() + "',";
         String ngayLap = "N'" + bienLaiNhap.getNgayLap() + "',";
         String soLuong = "N'" + bienLaiNhap.getSoLuong() + "'";
-        String idKho = "N'" + bienLaiNhap.getKho().getId()+ "',";
+        String idKho = "N'" + bienLaiNhap.getKho().getId() + "',";
 
         String sql = "insert into [CuaHangHoaQua].[dbo].[BienLaiNhap] (idBienLaiKho,idHopDong,idPhieuThuChi,idNhanVien)"
-                + " values("  +idBienLaiKho + idHopDong + idPhieuThuChi + idNhanVien + ")";
-        String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (idBienLaiKho,maBienLaiKho,ngayLap,idKho,soLuong)"
-                + " values(" + idBienLaiKho + maBienLaiKho + ngayLap + idKho+soLuong + ")";
+                + " values(" + idBienLaiKho + idHopDong + idPhieuThuChi + idNhanVien + ")";
+        String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong)"
+                + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + ")";
         try {
             con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
@@ -119,15 +174,16 @@ public class BienLaiNhapDAO extends DAO {
     public static void main(String[] args) {
         BienLaiNhapDAO aO = new BienLaiNhapDAO();
         HopDong dong = new HopDong();
+        dong.setId(1);
         NhanVien nhanVien = new NhanVien();
+        nhanVien.setIdNhanVien(1);
         PhieuThuChi chi = new PhieuThuChi();
-
         BienLaiNhap bienLaiNhap = new BienLaiNhap();
         bienLaiNhap.setHopDong(dong);
-        Kho k=new Kho();
+        Kho k = new Kho();
+        k.setId(1);
         bienLaiNhap.setKho(k);
         bienLaiNhap.setNhanVien(nhanVien);
-        bienLaiNhap.setPhieuThuChi(chi);
-        aO.themBienLaiNhap(bienLaiNhap);
+        aO.themBienLaiNhapCongNo(bienLaiNhap);
     }
 }
