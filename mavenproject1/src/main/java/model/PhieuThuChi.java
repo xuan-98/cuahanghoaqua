@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
-
 /**
  *
  * @author Duong
  */
+package model;
 public class PhieuThuChi {
     private int idPhieuThuChi;
     private String loaiPhieu;

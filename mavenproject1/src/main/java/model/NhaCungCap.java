@@ -4,11 +4,6 @@
  * and open the template in the editor.
  */
 package model;
-
-/**
- *
- * @author Duong
- */
 public class NhaCungCap {
     private int id;
     private String ten;
@@ -56,7 +51,6 @@ public class NhaCungCap {
     public void setSodienthoai(String sodienthoai) {
         this.sodienthoai = sodienthoai;
     }
-     
 
     
 }

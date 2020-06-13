@@ -8,6 +8,7 @@ package view;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import control.BienLaiKhoDAO;
 import control.KhoDAO;
 import control.MatHangDAO;
 import control.NhaCungCapDAO;
@@ -67,8 +68,32 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         loadDanhSachMH();
         addListenerText(jTextFieldDonGia);
         loadThemMatHangDaChon();
+        createMatBienLai();
     }
-    
+
+    int countDigit(int number) {
+        int count = 0;
+        while (number > 0) {
+            number /= 10;
+            count += 1;
+        }
+        return count;
+    }
+    private String maBienLai;
+    void createMatBienLai() {
+        BienLaiKhoDAO aO = new BienLaiKhoDAO();
+        ArrayList<BienLaiKho> listBienLaiKho = aO.getAllBienLaiKho();
+        int count = countDigit(listBienLaiKho.size() + 1);
+         this.maBienLai = "PN-";
+        int rest = 7 - count;
+        while (rest > 0) {
+            maBienLai += '0';
+            rest--;
+        }
+        this.maBienLai = this.maBienLai + "" + listBienLaiKho.size();
+        jTextFieldMaBienLai.setText(this.maBienLai);
+    }
+
     String dinhDangTien(int number) {
         DecimalFormat df = new DecimalFormat("#,##0");
         String s = df.format(new BigDecimal(number));
@@ -165,7 +190,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
 
     // tải dữ liệu từ cơ sở dữ liệu vào bảng mặt hàng
     void loadDanhSachMH() {
-        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã mặt hàng", "Tên mặt hàng", "ĐVT", "Số lượng"}, 0);
+        DefaultTableModel defaultTableModel = new DefaultTableModel(new String[]{"", "Mã mặt hàng", "Tên mặt hàng", "ĐVT", "Mô tả"}, 0);
         defaultTableModel.setRowCount(0);
         listMatHang = new MatHangDAO().getAllMatHang();
         jTableDanhSachMH.setModel(defaultTableModel);
@@ -197,6 +222,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         jComboBoxNhanVien.removeAllItems();
         NhanVienDAO nhanVienDAO = new NhanVienDAO();
         this.listNV = nhanVienDAO.getAllNVKho();
+        nvSelected = listNV.get(0);
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         for (int i = 0; i < listNV.size(); i++) {
             model.addElement(listNV.get(i).getHoTen());
@@ -217,6 +243,8 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         jComboBoxKho.removeAllItems();
         KhoDAO khoDAO = new KhoDAO();
         this.listKho = khoDAO.getAllKho();
+        khoSelected = listKho.get(0);
+
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         for (int i = 0; i < listKho.size(); i++) {
             model.addElement("Kho ở " + listKho.get(i).getDiaChi());
@@ -237,6 +265,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         jComboBoxNcc.removeAllItems();
         NhaCungCapDAO nccdao = new NhaCungCapDAO();
         this.listNcc = nccdao.getAllNhaCungCap();
+        nccSelected = listNcc.get(0);
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         for (int i = 0; i < listNcc.size(); i++) {
             model.addElement(listNcc.get(i).getTen());
@@ -274,7 +303,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         jDateChooserNgayLap = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldMaBienLai = new javax.swing.JTextField();
         jComboBoxKho = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -347,7 +376,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
 
         jLabel2.setText("Nhà cung cấp");
 
-        jTextField1.setEditable(false);
+        jTextFieldMaBienLai.setEditable(false);
 
         jComboBoxKho.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Kho Hà Nội", "Item 2", "Item 3", "Item 4" }));
 
@@ -405,7 +434,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel5)
                         .addGap(10, 10, 10)
-                        .addComponent(jTextField1)))
+                        .addComponent(jTextFieldMaBienLai)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -417,7 +446,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel5)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldMaBienLai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -439,7 +468,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBoxKho, jComboBoxNcc, jComboBoxNhanVien, jDateChooserNgayLap, jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jTextField1, jTextField2, jTextField3});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBoxKho, jComboBoxNcc, jComboBoxNhanVien, jDateChooserNgayLap, jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jTextField2, jTextField3, jTextFieldMaBienLai});
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Tổng cộng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12))); // NOI18N
 
@@ -1115,6 +1144,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         SanPham sp = new SanPham(matHangThem);
         sp.setHanSuDung(hsd);
         sp.setGia(giaMatHang);
+        System.out.println(sp.toString());
         if (check = true) {
             listMatHangDaChon.put(sp, soLuong);
             loadThemMatHangDaChon();
@@ -1139,8 +1169,8 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
             String hsd2 = pham.getHanSuDung();
             String dvt2 = pham.getDonViTinh();
             int gia2 = pham.getGia();
-            if(ma.equals(maMH2)&&tenMH.equals(tenMH2)&&hsd.equals(hsd2)&&soLuong==soluong2.intValue()&&row!=-1){
-                int t=listMatHangDaChon.remove(pham);
+            if (ma.equals(maMH2) && tenMH.equals(tenMH2) && hsd.equals(hsd2) && soLuong == soluong2.intValue() && row != -1) {
+                int t = listMatHangDaChon.remove(pham);
                 break;
             }
         }
@@ -1148,11 +1178,13 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonXoaDongActionPerformed
 
     private void jButtonThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonThanhToanActionPerformed
-        String ngayNhap=((JTextField) jDateChooserNgayLap.getDateEditor().getUiComponent()).getText();
-         
-        GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon);
-        dXacNhanNhapHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        String ngayNhap = ((JTextField) jDateChooserNgayLap.getDateEditor().getUiComponent()).getText();
+        System.out.println(nccSelected.getTen() + " ten ncc da chon");
+        System.out.println(nvSelected.getHoTen() + " ten nvSelected da chon");
+        System.out.println(khoSelected.getDiaChi() + " ten khoSelected da chon");
 
+        GDXacNhanNhapHang dXacNhanNhapHang = new GDXacNhanNhapHang(listMatHangDaChon, nccSelected, nvSelected, ngayNhap, khoSelected,this.maBienLai);
+        dXacNhanNhapHang.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         dXacNhanNhapHang.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 JFrame frame = (JFrame) e.getSource();
@@ -1274,7 +1306,6 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTableDanhSachMH;
     private javax.swing.JTable jTableMatHangThem;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
@@ -1291,6 +1322,7 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextFieldDonGia;
+    private javax.swing.JTextField jTextFieldMaBienLai;
     private javax.swing.JTextField jTextFieldTimKiem;
     // End of variables declaration//GEN-END:variables
 }

@@ -59,7 +59,7 @@ CREATE TABLE [CuaHangHoaQua].[dbo].MatHang (
 	donVi nvarchar(255) not null
 );
 
-drop table [CuaHangHoaQua].[dbo].SanPham;
+
 CREATE TABLE [CuaHangHoaQua].[dbo].SanPham (
     idSanPham int PRIMARY KEY IDENTITY(1,1),
 	gia int not null,
@@ -76,6 +76,7 @@ CREATE TABLE [CuaHangHoaQua].[dbo].BienLaiKho (
     ngayLap nvarchar(255)  not null,
 	idKho  int not null,
     soLuong int not null,
+	tongCong bigint not null,
 	foreign key (idKho) references Kho(idKho)
 );
 
@@ -136,9 +137,12 @@ drop table [CuaHangHoaQua].[dbo].CongNo
 CREATE TABLE [CuaHangHoaQua].[dbo].CongNo (
     idCongNo int PRIMARY KEY IDENTITY(1,1),
 	maSoThue nvarchar (255) not null,
-	soTienNo int not null,
-	idBienLaiNhap int not null,
-	foreign key (idBienLaiNhap) references BienLaiNhap(idBienLaiNhap),
+	soTienNo bigint not null,
+	idNhaCungCap int not null,
+	idPhieuThuChi int ,
+	foreign key (idNhaCungCap) references NhaCungCap(idNhaCungCap),
+	foreign key (idPhieuThuChi) references  PhieuThuChi(idPhieuThuChi),
+
 );
 /*---------------------Xoa Tat Ca-------------------------*/
 drop table [CuaHangHoaQua].[dbo].CongNo

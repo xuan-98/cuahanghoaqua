@@ -17,7 +17,16 @@ public class BienLaiKho {
     private String ngayLap;
     private int soLuong;
     private Kho kho;
+    private int tongCong;
 
+    public int getTongCong() {
+        return tongCong;
+    }
+
+    public void setTongCong(int tongCong) {
+        this.tongCong = tongCong;
+    }
+    
     public BienLaiKho() {
     }
 

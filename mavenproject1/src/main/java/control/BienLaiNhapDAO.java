@@ -67,31 +67,49 @@ public class BienLaiNhapDAO extends DAO {
         return listBienLaiNhap;
     }
 
-    public boolean themBienLaiNhapCongNo(BienLaiNhap bienLaiNhap) {
+    public boolean themBienLaiNhapCongNo(BienLaiNhap bienLaiNhap, SanPham pham) {
         PreparedStatement stm = null;
         ResultSet rs = null;
         String idBienLaiNhap = "'" + bienLaiNhap.getIdBienLaiNhap() + "',";
-        String idBienLaiKho = "'" + bienLaiNhap.getId() + "',";//get id bien lai kho
+        String idBienLaiKho;
         String idHopDong = "'" + bienLaiNhap.getHopDong().getId() + "',";
         String idNhanVien = "'" + bienLaiNhap.getNhanVien().getIdNhanVien() + "'";
         String maBienLaiKho = "N'" + bienLaiNhap.getMaBienLai() + "',";
         String ngayLap = "N'" + bienLaiNhap.getNgayLap() + "',";
-        String soLuong = "N'" + bienLaiNhap.getSoLuong() + "'";
+        String soLuong = "N'" + bienLaiNhap.getSoLuong() + "',";
         String idKho = "N'" + bienLaiNhap.getKho().getId() + "',";
-
+        String tongTien = "N'" + bienLaiNhap.getTongCong() + "'";
+        ////////////////////////--------SanPham
+        String idSanPham = "'" + pham.getGia() + "',";
+        String hanSuDung = "'" + pham.getHanSuDung() + "',";
+        String idMatHang = "'" + pham.getIdMatHang() + "'";
+        String gia = "'" + pham.getGia() + "',";
+        System.out.println("BienLaiNhapDAO "+pham.getIdMatHang());
+        ////////////// // //
         try {
             String sql3 = "select idBienLaiKho from [CuaHangHoaQua].[dbo].[BienLaiKho]";
             stm = con.prepareStatement(sql3);
             rs = stm.executeQuery();
+            int maxId = 0;
             while (rs.next()) {
-                idBienLaiKho = "'" + (rs.getInt("idBienLaiKho")+1) + "',";
+                int tmp = rs.getInt("idBienLaiKho");
+                if (maxId < tmp) {
+                    maxId = tmp;
+                }
             }
+            idBienLaiKho = "'" + (maxId) + "',";
+             sql3 = "insert into [CuaHangHoaQua].[dbo].[SanPham] (idBienLaiKho,gia,hanSuDung,idMatHang)"
+                    + " values(" +idBienLaiKho+ gia + hanSuDung + idMatHang+ ")";
             String sql = "insert into [CuaHangHoaQua].[dbo].[BienLaiNhap] (idBienLaiKho,idHopDong,idNhanVien)"
                     + " values(" + idBienLaiKho + idHopDong + idNhanVien + ")";
-            String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong)"
-                    + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + ")";
+            String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
+                    + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
+            System.out.println(sql3);
             con.setAutoCommit(false);
             stm = con.prepareStatement(sql2);
+            stm.executeUpdate();
+            con.commit();
+             stm = con.prepareStatement(sql3);
             stm.executeUpdate();
             con.commit();
             stm = con.prepareStatement(sql);
@@ -132,13 +150,14 @@ public class BienLaiNhapDAO extends DAO {
         String idNhanVien = "'" + bienLaiNhap.getNhanVien().getIdNhanVien() + "'";
         String maBienLaiKho = "N'" + bienLaiNhap.getMaBienLai() + "',";
         String ngayLap = "N'" + bienLaiNhap.getNgayLap() + "',";
-        String soLuong = "N'" + bienLaiNhap.getSoLuong() + "'";
+        String soLuong = "N'" + bienLaiNhap.getSoLuong() + "',";
         String idKho = "N'" + bienLaiNhap.getKho().getId() + "',";
+        String tongTien = "N'" + bienLaiNhap.getTongCong() + "'";
 
         String sql = "insert into [CuaHangHoaQua].[dbo].[BienLaiNhap] (idBienLaiKho,idHopDong,idPhieuThuChi,idNhanVien)"
                 + " values(" + idBienLaiKho + idHopDong + idPhieuThuChi + idNhanVien + ")";
-        String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong)"
-                + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + ")";
+        String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
+                + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
         try {
             con.setAutoCommit(false);
             stm = con.prepareStatement(sql);
@@ -172,7 +191,6 @@ public class BienLaiNhapDAO extends DAO {
     }
 
     public static void main(String[] args) {
-        BienLaiNhapDAO aO = new BienLaiNhapDAO();
         HopDong dong = new HopDong();
         dong.setId(1);
         NhanVien nhanVien = new NhanVien();
@@ -184,6 +202,7 @@ public class BienLaiNhapDAO extends DAO {
         k.setId(1);
         bienLaiNhap.setKho(k);
         bienLaiNhap.setNhanVien(nhanVien);
-        aO.themBienLaiNhapCongNo(bienLaiNhap);
+            BienLaiNhapDAO aO = new BienLaiNhapDAO();
+            aO.themBienLaiNhapCongNo(bienLaiNhap, new SanPham());
     }
 }

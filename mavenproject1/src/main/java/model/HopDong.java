@@ -12,9 +12,27 @@ package model;
 public class HopDong {
     private int id;
     private String ngayKi;
+    private  String tenHopDong;
     private String tuNgay;
     private String denNGay;
     private NhanVien nv;
+    private NhaCungCap ncc;
+
+    public NhaCungCap getNcc() {
+        return ncc;
+    }
+
+    public void setNcc(NhaCungCap ncc) {
+        this.ncc = ncc;
+    }
+
+    public String getTenHopDong() {
+        return tenHopDong;
+    }
+
+    public void setTenHopDong(String tenHopDong) {
+        this.tenHopDong = tenHopDong;
+    }
 
     public HopDong() {
     }

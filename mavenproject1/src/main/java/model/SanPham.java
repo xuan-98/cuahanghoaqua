@@ -17,6 +17,7 @@ public class SanPham extends MatHang {
     private BienLaiKho BienLaiKho;
 
     public SanPham(MatHang mh) {
+        this.setIdMatHang(mh.getIdMatHang());
         this.setMaMatHang(mh.getMaMatHang());
         this.setDonViTinh(mh.getDonViTinh());
         this.setMoTa(mh.getMoTa());
@@ -59,4 +60,9 @@ public class SanPham extends MatHang {
         this.BienLaiKho = BienLaiKho;
     }
 
+    @Override
+    public String toString() {
+        return getIdMatHang()+" "+getTenMatHang();
+    }
+    
 }
