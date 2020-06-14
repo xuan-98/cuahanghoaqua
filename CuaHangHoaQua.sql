@@ -59,14 +59,15 @@ CREATE TABLE [CuaHangHoaQua].[dbo].MatHang (
 	donVi nvarchar(255) not null
 );
 
-
+drop table [CuaHangHoaQua].[dbo].SanPham
 CREATE TABLE [CuaHangHoaQua].[dbo].SanPham (
     idSanPham int PRIMARY KEY IDENTITY(1,1),
+	maSp nvarchar(255) not null,
 	gia int not null,
 	hanSuDung nvarchar(255) not null,
 	idMatHang int not null,
 	idBienLaiKho int ,
-	foreign key (idMatHang) references MatHang(idMatHang),
+	foreign key (idMatHang) references MatHang (idMatHang),
 	foreign key (idBienLaiKho) references BienLaiKho(idBienLaiKho)
 );
 
@@ -79,16 +80,17 @@ CREATE TABLE [CuaHangHoaQua].[dbo].BienLaiKho (
 	tongCong bigint not null,
 	foreign key (idKho) references Kho(idKho)
 );
-
+drop table [CuaHangHoaQua].[dbo].BienLaiXuat
 CREATE TABLE [CuaHangHoaQua].[dbo].BienLaiXuat (
     idBienLaiXuat int PRIMARY KEY IDENTITY(1,1),
-    ngayLap nvarchar(255)  not null,
-    soLuong int not null,
 	tiLeThue int not null,
 	tiLeLai int not null,
 	idBienLaiKho int not null,
-	soTienXuat int not null,
-	foreign key (idBienLaiKho) references BienLaiKho(idBienLaiKho)
+	idCuaHang int not null,
+	idNhanVien int not null,
+	foreign key (idBienLaiKho) references BienLaiKho(idBienLaiKho),
+	foreign key (idNhanVien) references NhanVien(idNhanVien),
+	foreign key (idCuaHang) references CuaHang(idCuaHang)
 );
 CREATE TABLE [CuaHangHoaQua].[dbo].Kho (
     idKho int PRIMARY KEY IDENTITY(1,1),
@@ -251,3 +253,17 @@ insert into [CuaHangHoaQua].[dbo].HopDong (idHopDong,tenHopDong,ngayKi,denNgay,i
 insert into [CuaHangHoaQua].[dbo].HopDong (idHopDong,tenHopDong,ngayKi,denNgay,idNhanVien,idNhaCungCap) values (9,N'Hợp đồng hợp tác đầu tư',N'12/06/2020',N'vô thời hạn',2,9);
 insert into [CuaHangHoaQua].[dbo].HopDong (idHopDong,tenHopDong,ngayKi,denNgay,idNhanVien,idNhaCungCap) values (10,N'Hợp đồng hợp tác đầu tư',N'12/06/2020',N'vô thời hạn',2,10);
 insert into [CuaHangHoaQua].[dbo].HopDong (idHopDong,tenHopDong,ngayKi,denNgay,idNhanVien,idNhaCungCap) values (11,N'Hợp đồng hợp tác đầu tư',N'12/06/2020',N'vô thời hạn',2,11);
+
+DECLARE @TransactionName varchar(20) = 'Transaction1'; 
+BEGIN TRAN @TransactionName  
+insert into [CuaHangHoaQua].[dbo].HopDong (idHopDong,tenHopDong,ngayKi,denNgay,idNhanVien,idNhaCungCap) values (12,N'Hợp đồng hợp tác đầu tư',N'12/06/2020',N'vô thời hạn',2,9);
+rollback Tran @TransactionName;
+/*--------------truy van xuat kho-------------*/
+  select  sp.maSp,mh.tenMatHang,mh.maMatHang, sp.gia,sp.hanSuDung,sp.idMatHang,blk.idBienLaiKho,blk.soLuong,mh.donVi from [CuaHangHoaQua].[dbo].[SanPham] sp inner join   [CuaHangHoaQua].[dbo].[BienLaiKho] blk on sp.idBienLaiKho=blk.idBienLaiKho 
+  inner join  [CuaHangHoaQua].[dbo].[BienLaiNhap] bln on sp.idBienLaiKho=bln.idBienLaiKho inner join [CuaHangHoaQua].[dbo].[MatHang] mh on sp.idMatHang=mh.idMatHang  where idKho=1;
+  select bln.idBienLaiNhap,bln.idBienLaiKho, bln.idHopDong, bln.idNhanVien from [CuaHangHoaQua].[dbo].[BienLaiNhap] bln inner join [CuaHangHoaQua].[dbo].[BienLaiKho] blk on bln.idBienLaiKho=blk.idBienLaiKho inner join [CuaHangHoaQua].[dbo].[SanPham] sp on sp.idBienLaiKho=bln.idBienLaiKho where idSanPham=13; 
+  delete from [CuaHangHoaQua].[dbo].[SanPham]
+  select *,spNhap.soLuong-spXuat.soLuong as conLai  from ( select sp.maSp,sp.gia,blk.soLuong from [CuaHangHoaQua].[dbo].[SanPham]  sp inner join [CuaHangHoaQua].[dbo].[BienLaiNhap]  bln on sp.idBienLaiKho = bln.idBienLaiKho inner join  [CuaHangHoaQua].[dbo].[BienLaiKho] blk on sp.idBienLaiKho=blk.idBienLaiKho  ) spNhap inner join
+  (select sp.maSp,sp.gia,blk.soLuong  from [CuaHangHoaQua].[dbo].[SanPham]  sp inner join [CuaHangHoaQua].[dbo].[BienLaiXuat]  blx on sp.idBienLaiKho = blx.idBienLaiKho inner join  [CuaHangHoaQua].[dbo].[BienLaiKho] blk on sp.idBienLaiKho=blk.idBienLaiKho ) spXuat on spNhap.maSp=spXuat.maSp
+
+  

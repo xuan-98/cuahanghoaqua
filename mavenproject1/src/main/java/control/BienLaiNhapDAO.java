@@ -81,6 +81,7 @@ public class BienLaiNhapDAO extends DAO {
         String tongTien = "N'" + bienLaiNhap.getTongCong() + "'";
         ////////////////////////--------SanPham
         String idSanPham = "'" + pham.getGia() + "',";
+        String maSanPham = "'" + pham.getMaSp()+ "',";
         String hanSuDung = "'" + pham.getHanSuDung() + "',";
         String idMatHang = "'" + pham.getIdMatHang() + "'";
         String gia = "'" + pham.getGia() + "',";
@@ -97,14 +98,14 @@ public class BienLaiNhapDAO extends DAO {
                     maxId = tmp;
                 }
             }
-            idBienLaiKho = "'" + (maxId) + "',";
-             sql3 = "insert into [CuaHangHoaQua].[dbo].[SanPham] (idBienLaiKho,gia,hanSuDung,idMatHang)"
-                    + " values(" +idBienLaiKho+ gia + hanSuDung + idMatHang+ ")";
+            maSanPham = "'" + (pham.getMaSp()+""+maxId)+"',";
+            idBienLaiKho = "'" + (maxId+1) + "',";
+             sql3 = "insert into [CuaHangHoaQua].[dbo].[SanPham] (idBienLaiKho,maSp,gia,hanSuDung,idMatHang)"
+                    + " values(" +idBienLaiKho+ maSanPham+gia + hanSuDung + idMatHang+ ")";
             String sql = "insert into [CuaHangHoaQua].[dbo].[BienLaiNhap] (idBienLaiKho,idHopDong,idNhanVien)"
                     + " values(" + idBienLaiKho + idHopDong + idNhanVien + ")";
             String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
-            System.out.println(sql3);
             con.setAutoCommit(false);
             stm = con.prepareStatement(sql2);
             stm.executeUpdate();

@@ -13,6 +13,7 @@ import control.KhoDAO;
 import control.MatHangDAO;
 import control.NhaCungCapDAO;
 import control.NhanVienDAO;
+import control.SanPhamDAO;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -1144,6 +1145,8 @@ public class GDNhapHangFrm extends javax.swing.JFrame {
         SanPham sp = new SanPham(matHangThem);
         sp.setHanSuDung(hsd);
         sp.setGia(giaMatHang);
+        String maSp="SP";
+        sp.setMaSp(maSp);
         System.out.println(sp.toString());
         if (check = true) {
             listMatHangDaChon.put(sp, soLuong);

@@ -36,12 +36,12 @@ public class SanPhamDAO extends DAO{
                 sp.setTenMatHang(rs.getString(8));
                 sp.setMoTa(rs.getString(9));
                 sp.setIdSanPham(rs.getInt(1));
-                sp.setGia(rs.getInt(2));
-                sp.setHanSuDung(rs.getString(3));
+                sp.setGia(rs.getInt(3));
+                sp.setHanSuDung(rs.getString(4));
                 MatHang hang=new MatHang();
-                hang.setIdMatHang(rs.getInt(4));
+                hang.setIdMatHang(rs.getInt(5));
                 BienLaiKho bienLaiKho=new BienLaiKho();
-                bienLaiKho.setId(rs.getInt(5));
+                bienLaiKho.setId(rs.getInt(6));
                 sp.setBienLaiKho(bienLaiKho);
                 listSanPham.add(sp);
             }

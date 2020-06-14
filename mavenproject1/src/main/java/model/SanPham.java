@@ -12,9 +12,18 @@ package model;
 public class SanPham extends MatHang {
 
     private int idSanPham;
+    private String maSp;
     private int gia;
     private String hanSuDung;
     private BienLaiKho BienLaiKho;
+
+    public String getMaSp() {
+        return maSp;
+    }
+
+    public void setMaSp(String maSp) {
+        this.maSp = maSp;
+    }
 
     public SanPham(MatHang mh) {
         this.setIdMatHang(mh.getIdMatHang());

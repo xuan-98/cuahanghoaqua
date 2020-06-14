@@ -10,6 +10,7 @@ C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\MatHang.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\NhanVienDAO.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\BienLaiNhapDAO.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\view\GDXacNhanNhapHang.java
+C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\BienLaiKhoDAO.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\BoPhanDAO.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\SanPham.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\CongTyDAO.java
@@ -18,8 +19,10 @@ C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\Nguoi.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\BoPhan.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\ChiNhanh.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\MatHangDAO.java
+C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\XuatHangDAO.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\CuaHang.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\KhoDAO.java
+C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\RecordSanPham.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\Kho.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\view\Loading.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\view\jasper.java
@@ -31,8 +34,12 @@ C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\DAO.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\view\NewJFrame1.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\NhanVien.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\CongNo.java
+C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\RecordBienLaiXuat.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\HikariWorkerThread.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\BienLaiNhap.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\PhieuThuChi.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\DbConfiguration.java
+C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\view\GDXuatHangFrm.java
+C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\control\BienLaiXuatDAO.java
 C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\CongTy.java
+C:\Users\AD\Desktop\btlHTTQL\mavenproject1\src\main\java\model\BienLaiXuat.java
