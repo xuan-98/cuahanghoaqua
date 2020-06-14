@@ -261,9 +261,13 @@ rollback Tran @TransactionName;
 /*--------------truy van xuat kho-------------*/
   select  sp.maSp,mh.tenMatHang,mh.maMatHang, sp.gia,sp.hanSuDung,sp.idMatHang,blk.idBienLaiKho,blk.soLuong,mh.donVi from [CuaHangHoaQua].[dbo].[SanPham] sp inner join   [CuaHangHoaQua].[dbo].[BienLaiKho] blk on sp.idBienLaiKho=blk.idBienLaiKho 
   inner join  [CuaHangHoaQua].[dbo].[BienLaiNhap] bln on sp.idBienLaiKho=bln.idBienLaiKho inner join [CuaHangHoaQua].[dbo].[MatHang] mh on sp.idMatHang=mh.idMatHang  where idKho=1;
+  
+  select * from  [CuaHangHoaQua].[dbo].[BienLaiKho] where idBienLaiKho=159;
   select bln.idBienLaiNhap,bln.idBienLaiKho, bln.idHopDong, bln.idNhanVien from [CuaHangHoaQua].[dbo].[BienLaiNhap] bln inner join [CuaHangHoaQua].[dbo].[BienLaiKho] blk on bln.idBienLaiKho=blk.idBienLaiKho inner join [CuaHangHoaQua].[dbo].[SanPham] sp on sp.idBienLaiKho=bln.idBienLaiKho where idSanPham=13; 
   delete from [CuaHangHoaQua].[dbo].[SanPham]
-  select *,spNhap.soLuong-spXuat.soLuong as conLai  from ( select sp.maSp,sp.gia,blk.soLuong from [CuaHangHoaQua].[dbo].[SanPham]  sp inner join [CuaHangHoaQua].[dbo].[BienLaiNhap]  bln on sp.idBienLaiKho = bln.idBienLaiKho inner join  [CuaHangHoaQua].[dbo].[BienLaiKho] blk on sp.idBienLaiKho=blk.idBienLaiKho  ) spNhap inner join
-  (select sp.maSp,sp.gia,blk.soLuong  from [CuaHangHoaQua].[dbo].[SanPham]  sp inner join [CuaHangHoaQua].[dbo].[BienLaiXuat]  blx on sp.idBienLaiKho = blx.idBienLaiKho inner join  [CuaHangHoaQua].[dbo].[BienLaiKho] blk on sp.idBienLaiKho=blk.idBienLaiKho ) spXuat on spNhap.maSp=spXuat.maSp
 
+  update [CuaHangHoaQua].[dbo].[BienLaiKho] set soLuong= soLuong-4 where idBienLaiKho=170
+  update blk set blk.soLuong=spNhap.soLuong-spXuat.soLuong   from  ( select blk.idBienLaiKho,blk.maBienLaiKho, sp.maSp,sp.gia,blk.soLuong from [CuaHangHoaQua].[dbo].[SanPham]  sp inner join [CuaHangHoaQua].[dbo].[BienLaiNhap]  bln on sp.idBienLaiKho = bln.idBienLaiKho inner join  [CuaHangHoaQua].[dbo].[BienLaiKho] blk on sp.idBienLaiKho=blk.idBienLaiKho  ) spNhap inner join
+  (select blk.idBienLaiKho, blk.maBienLaiKho,sp.maSp,sp.gia,blk.soLuong  from [CuaHangHoaQua].[dbo].[SanPham]  sp inner join [CuaHangHoaQua].[dbo].[BienLaiXuat]  blx on sp.idBienLaiKho = blx.idBienLaiKho inner join  [CuaHangHoaQua].[dbo].[BienLaiKho] blk on sp.idBienLaiKho=blk.idBienLaiKho ) spXuat on spNhap.maSp=spXuat.maSp inner join [CuaHangHoaQua].[dbo].[BienLaiKho] blk on blk.idBienLaiKho= spNhap.idBienLaiKho
+	
   
