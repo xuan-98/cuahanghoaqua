@@ -48,6 +48,14 @@ public class BienLaiXuatDAO extends DAO {
         System.out.println("BienLaiNhapDAO " + pham.getIdMatHang());
         ////////////// // //
         try {
+            String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
+                    + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
+            System.out.println(sql2);
+            con.setAutoCommit(false);
+            stm = con.prepareStatement(sql2);
+            stm.executeUpdate();
+            con.commit();
+            
             String sql3 = "select idBienLaiKho from [CuaHangHoaQua].[dbo].[BienLaiKho]";
             stm = con.prepareStatement(sql3);
             rs = stm.executeQuery();
@@ -58,20 +66,14 @@ public class BienLaiXuatDAO extends DAO {
                     maxId = tmp;
                 }
             }
-            idBienLaiKho = "'" + (maxId + 1) + "',";
+            idBienLaiKho = "'" + (maxId) + "',";
             String sql4 = "update [CuaHangHoaQua].[dbo].[BienLaiKho] set soLuong = soLuong - " + bienLaiXuat.getSoLuong() + " where idBienLaiKho=" + pham.getBienLaiKho().getId();
             System.out.println(sql4);
             sql3 = "insert into [CuaHangHoaQua].[dbo].[SanPham] (idBienLaiKho,maSp,gia,hanSuDung,idMatHang)"
                     + " values(" + idBienLaiKho + maSanPham + gia + hanSuDung + idMatHang + ")";
             String sql = "insert into [CuaHangHoaQua].[dbo].[BienLaiXuat] (idBienLaiKho,tiLeThue,idCuaHang,idNhanVien,tiLeLai)"
                     + " values(" + idBienLaiKho + tiLeThue + idCuaHang + idNhanVien + tiLeLai + ")";
-            String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
-                    + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
-            System.out.println(sql);
-            con.setAutoCommit(false);
-            stm = con.prepareStatement(sql2);
-            stm.executeUpdate();
-            con.commit();
+            
             stm = con.prepareStatement(sql3);
             stm.executeUpdate();
             con.commit();
@@ -88,7 +90,7 @@ public class BienLaiXuatDAO extends DAO {
             try {
                 if (con != null) {
                     con.rollback();
-                    System.out.println("roll back...BienLaiNhapDAO");
+                    System.out.println("roll back...BienLaiXuatDAO");
                 }
             } catch (SQLException ex2) {
                 ex2.printStackTrace();
