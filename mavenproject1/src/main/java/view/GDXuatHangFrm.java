@@ -1015,6 +1015,7 @@ public class GDXuatHangFrm extends javax.swing.JFrame {
 
             BienLaiXuat bienLaiXuat = new BienLaiXuat();
             bienLaiXuat.setMaBienLai(maBienLai);
+            
             bienLaiXuat.setNv(nvSelected);
             bienLaiXuat.setCuaHang(cuaHangSelected);
             System.out.println("cuaHangSelected=" + cuaHangSelected.getTenCuaHang());

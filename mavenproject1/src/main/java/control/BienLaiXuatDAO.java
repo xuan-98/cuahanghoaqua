@@ -32,7 +32,7 @@ public class BienLaiXuatDAO extends DAO {
         String tiLeThue = "'" + bienLaiXuat.getTiLeThue() + "',";
         String tiLeLai = "'" + bienLaiXuat.getTiLeLai() + "'";
         String idCuaHang = "'" + bienLaiXuat.getCuaHang().getId() + "',";
-        String idNhanVien = "'" + bienLaiXuat.getNv().getId() + "',";
+        String idNhanVien = "'" + bienLaiXuat.getNv().getIdNhanVien()+ "',";
 
         String maBienLaiKho = "'" + bienLaiXuat.getMaBienLai() + "',";
         String ngayLap = "N'" + bienLaiXuat.getNgayLap() + "',";
@@ -67,6 +67,7 @@ public class BienLaiXuatDAO extends DAO {
                     + " values(" + idBienLaiKho + tiLeThue + idCuaHang + idNhanVien + tiLeLai + ")";
             String sql2 = "insert into [CuaHangHoaQua].[dbo].[BienLaiKho] (maBienLaiKho,ngayLap,idKho,soLuong,tongCong)"
                     + " values(" + maBienLaiKho + ngayLap + idKho + soLuong + tongTien + ")";
+            System.out.println(sql);
             con.setAutoCommit(false);
             stm = con.prepareStatement(sql2);
             stm.executeUpdate();

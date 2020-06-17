@@ -79,12 +79,14 @@ model\CuaHang.class
 view\GDXuatHangFrm$9.class
 model\RecordSanPham.class
 view\GDNhapHangFrm$18.class
+control\XuatHangDAO.class
 view\GDNhapHangFrm$14.class
 view\NewJFrame1.class
 view\GDNhapHangFrm$4.class
 view\jasper$1.class
 model\BienLaiNhap.class
 model\SanPham.class
+control\BienLaiNhapDAO.class
 view\GDXuatHangFrm$3.class
 view\GDXacNhanNhapHang$1.class
 view\GDXuatHangFrm$11.class
