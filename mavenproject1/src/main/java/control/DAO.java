@@ -46,7 +46,7 @@ public class DAO {
             stm = con.prepareStatement(sql2);
             rs=stm.executeQuery();
             while(rs.next()){
-               System.out.println("id:\t"+rs.getString(1)+"\t"+rs.getString(2)+"\t"+rs.getString(3));
+               System.out.println("id:\t"+rs.getString(1));
            }
         } catch (Exception e) {
             e.printStackTrace();

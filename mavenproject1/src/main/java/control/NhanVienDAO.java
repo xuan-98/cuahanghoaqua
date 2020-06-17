@@ -31,13 +31,13 @@ public class NhanVienDAO extends DAO {
             rs = stm.executeQuery();
             while (rs.next()) {
                 NhanVien nhanVien = new NhanVien();
-                nhanVien.setId(rs.getInt(8));
-                nhanVien.setEmail(rs.getString(9));
-                nhanVien.setNgaySinh(rs.getString(10));
-                nhanVien.setGioiTinh(rs.getString(11));
-                nhanVien.setHocVan(rs.getString(12));
-                nhanVien.setDiaChi(rs.getString(13));
-                nhanVien.setHoTen(rs.getString(14));
+                nhanVien.setId(rs.getInt(7));
+                nhanVien.setEmail(rs.getString(10));
+                nhanVien.setNgaySinh(rs.getString(11));
+                nhanVien.setGioiTinh(rs.getString(12));
+                nhanVien.setHocVan(rs.getString(13));
+                nhanVien.setDiaChi(rs.getString(14));
+                nhanVien.setHoTen(rs.getString(15));
                 nhanVien.setIdNhanVien(rs.getInt(1));
                 nhanVien.setVaiTro(rs.getString(2));
                 nhanVien.setUserName(rs.getString(3));
