@@ -5,12 +5,13 @@
  */
 package view;
 
+import model.NhanVien;
+
 /**
  *
  * @author Duong
  */
 public class NewJFrame extends javax.swing.JFrame {
-
     /**
      * Creates new form NewJFrame
      */
@@ -179,10 +180,19 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         setVisible(false);
-        Loading load= new Loading();
-        load.setUpLoading();
-        load.setVisible(true);
+        
+//        Loading load= new Loading();
+//        load.setUpLoading();
+//        load.setVisible(true);
+
+//        String username = jTextField2.getText();
+//        String password = jTextField3.getText();
+//        NhanVien nv= NhanVienDAO.checkLogin(username, password);
+//        GDQuanLyNhanVien qlnv = new GDQuanLyNhanVien(nv);
+        
+        NhanVien nv = new NhanVien("adiperaus2@mapquest.com", "10khongco");
+        this.setVisible(false);
+        (new GDQuanLyNhanVien(nv)).setVisible(true);
         System.out.println("asdab");
     }//GEN-LAST:event_jButton1ActionPerformed
 

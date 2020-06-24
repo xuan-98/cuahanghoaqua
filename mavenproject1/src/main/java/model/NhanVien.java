@@ -18,7 +18,21 @@ public class NhanVien extends Nguoi{
 
     public NhanVien() {
     }
-
+    
+    public NhanVien(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+   
+    public NhanVien(int idNhanVien, String vaiTro, String userName, String password, BoPhan boPhan, CuaHang cuaHang) {
+        this.idNhanVien = idNhanVien;
+        this.vaiTro = vaiTro;
+        this.userName = userName;
+        this.password = password;
+        this.boPhan = boPhan;
+        this.cuaHang = cuaHang;
+    }
+    
     public int getIdNhanVien() {
         return idNhanVien;
     }

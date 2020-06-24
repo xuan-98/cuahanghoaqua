@@ -28,7 +28,7 @@ public class CuaHangDAO extends DAO {
         String sql = "select *  from [CuaHangHoaQua].[dbo].[CuaHang] where idCuaHang=" + id + "";
         CuaHang cuaHang = new CuaHang();
         try {
-            stm = con.prepareStatement(sql);
+            stm = getCon().prepareStatement(sql);
             rs = stm.executeQuery();
             while (rs.next()) {
                 int idChiNhanh = rs.getInt(4);

@@ -6,15 +6,18 @@
 package model;
 
 /**
- *
  * @author Duong
  */
 public class BoPhan {
-     private int id;
-     private String ten;
-     private CongTy congTy;
+    private int id;
+    private String ten;
+    private CongTy congTy;
 
     public BoPhan() {
+    }
+
+    public BoPhan(int id) {
+        this.id = id;
     }
 
     public int getId() {
@@ -40,6 +43,9 @@ public class BoPhan {
     public void setCongTy(CongTy congTy) {
         this.congTy = congTy;
     }
-     
-     
+
+    @Override
+    public String toString() {
+        return getTen();
+    }
 }

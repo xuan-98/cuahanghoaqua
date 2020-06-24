@@ -15,14 +15,19 @@ public class CuaHang {
     private ChiNhanh chiNhanh;
     private String diaChi;
 
+    public CuaHang() {
+    }
+
+    public CuaHang(int id) {
+        this.id = id;
+    }
+    
     public String getDiaChi() {
         return diaChi;
     }
 
     public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
-    }
-    public CuaHang() {
     }
 
     public int getId() {
