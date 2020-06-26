@@ -53,5 +53,10 @@ public class CuaHang {
     public void setChiNhanh(ChiNhanh chiNhanh) {
         this.chiNhanh = chiNhanh;
     }
+
+    @Override
+    public String toString() {
+        return "CuaHang{" + "id=" + id + ", tenCuaHang=" + tenCuaHang + ", chiNhanh=" + chiNhanh + ", diaChi=" + diaChi + '}';
+    }
     
 }

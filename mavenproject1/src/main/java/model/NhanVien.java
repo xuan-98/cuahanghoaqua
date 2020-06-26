@@ -32,6 +32,10 @@ public class NhanVien extends Nguoi{
         this.boPhan = boPhan;
         this.cuaHang = cuaHang;
     }
+
+    public NhanVien(int idNhanVien) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public int getIdNhanVien() {
         return idNhanVien;
@@ -80,7 +84,11 @@ public class NhanVien extends Nguoi{
     public void setCuaHang(CuaHang cuaHang) {
         this.cuaHang = cuaHang;
     }
-    
+
+    @Override
+    public String toString() {
+        return "NhanVien{" + "idNhanVien=" + idNhanVien + ", vaiTro=" + vaiTro + ", userName=" + userName + ", password=" + password + ", boPhan=" + boPhan + ", cuaHang=" + cuaHang + '}';
+    }
     
     
 }

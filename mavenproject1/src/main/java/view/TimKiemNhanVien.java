@@ -7,24 +7,24 @@ package view;
 
 import control.NhanVienDAO;
 import model.NhanVien;
-
+import javax.swing.JTable;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Poly
  */
 public class TimKiemNhanVien extends javax.swing.JFrame {
-    NhanVien ql;
     private NhanVien selectedNhanVien;
     private List<NhanVien> nhanVienList;
     private static NhanVienDAO nhanVienDAO = new NhanVienDAO();
-
+    private DefaultTableModel table; 
+    int row = 0;
     /**
      * Creates new form TimKiemNhanVien
      */
-    public TimKiemNhanVien(NhanVien nv) {
-        this.ql = nv;
+    public TimKiemNhanVien() {
         initComponents();
     }
 
@@ -65,7 +65,7 @@ public class TimKiemNhanVien extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id Nhân Viên", "Vai Trò", "Username", "Password", "Id Bộ Phận", "Id Cửa Hàng", "Id Người"
+                "Id Nhân Viên", "Họ Tên", "Vai Trò", "Username", "Id Bộ Phận", "Id Cửa Hàng"
             }
         ));
         jScrollPane1.setViewportView(tblBang);
@@ -112,6 +112,11 @@ public class TimKiemNhanVien extends javax.swing.JFrame {
         });
 
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,15 +146,38 @@ public class TimKiemNhanVien extends javax.swing.JFrame {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
+        row = tblBang.getSelectedRow();
+        int idNhanVien = (int) tblBang.getValueAt(row, 1);
+        System.out.println(idNhanVien);
+        NhanVien nhanVien = new NhanVien(idNhanVien);
+        this.setVisible(false);
+        (new EditNhanVien(nhanVien)).setVisible(true);
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
+        table = (DefaultTableModel) tblBang.getModel();
         String keyword = txtInputName.getText().trim();
         if (keyword.length() > 0){
             nhanVienList = nhanVienDAO.getNhanVienByName(keyword);
+            for(NhanVien nhanVien:nhanVienList){
+                 Object[] ob = new Object[]{nhanVien.getIdNhanVien(), nhanVien.getHoTen(),nhanVien.getVaiTro(), 
+                     nhanVien.getUserName(), nhanVien.getBoPhan().getId(), nhanVien.getCuaHang().getId()};            
+                table.addRow(ob);
+            }
         }
     }//GEN-LAST:event_btnTimKiemActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        row = tblBang.getSelectedRow();
+        int idNhanVien = (int) tblBang.getValueAt(row, 1);
+        System.out.println(idNhanVien);
+        NhanVien nhanVien = new NhanVien(idNhanVien);
+        nhanVienDAO.deleteNV(nhanVien);
+        this.setVisible(false);
+        (new GDQuanLyNhanVien()).setVisible(true);
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
      * @param args the command line arguments

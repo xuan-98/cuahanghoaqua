@@ -85,6 +85,17 @@ public class Nguoi {
     public void setHoTen(String hoTen) {
         this.hoTen = hoTen;
     }
+
+    public Nguoi(int id, String email, String ngaySinh, String gioiTinh, String hocVan, String soDienThoai, String diaChi, String hoTen) {
+        this.id = id;
+        this.email = email;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.hocVan = hocVan;
+        this.soDienThoai = soDienThoai;
+        this.diaChi = diaChi;
+        this.hoTen = hoTen;
+    }
     
 
 }

@@ -14,6 +14,7 @@ import model.Nguoi;
 import model.NhanVien;
 
 import java.util.List;
+import model.CuaHang;
 
 /**
  * @author Poly
@@ -24,13 +25,12 @@ public class ThemNhanVien extends javax.swing.JFrame {
     private final NguoiDAO nguoiDAO;
     private final BoPhanDAO boPhanDAO;
     private final CuaHangDAO cuaHangDAO;
-    NhanVien ql;
     NhanVienDAO nhanVienDAO;
     /**
      * @param args the command line arguments
      */
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton btnXacNhan;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<BoPhan> cbxBoPhan;
@@ -66,8 +66,7 @@ public class ThemNhanVien extends javax.swing.JFrame {
     /**
      * Creates new form ThemNhanVien
      */
-    public ThemNhanVien(NhanVien nv) {
-        this.ql = nv;
+    public ThemNhanVien() {
         nhanVienDAO = new NhanVienDAO();
         nguoiDAO = new NguoiDAO();
         boPhanDAO = new BoPhanDAO();
@@ -76,37 +75,37 @@ public class ThemNhanVien extends javax.swing.JFrame {
         initComponents();
     }
 
-    public static void main(String[] args) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ThemNhanVien(new NhanVien("a", "b")).setVisible(true);
-            }
-        });
-    }
+//    public static void main(String[] args) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new ThemNhanVien().setVisible(true);
+//            }
+//        });
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -400,12 +399,12 @@ public class ThemNhanVien extends javax.swing.JFrame {
         int selectedIndex = cbxBoPhan.getSelectedIndex();
         BoPhan boPhan = allBoPhan.get(selectedIndex);
         nhanVien.setBoPhan(boPhan);
-        // TODO: Set cửa hàng cho nhân viên
-        nhanVien.setCuaHang(cuaHangDAO.getCuaHangById(1));
+        int idCuaHang = cuaHangDAO.getIdCuaHang();
+        nhanVien.setCuaHang(new CuaHang(idCuaHang));
         nhanVienDAO.insertNV(nhanVien);
         // TODO: Xuất thông báo nếu thích
         this.setVisible(false);
-        (new GDQuanLyNhanVien(ql)).setVisible(true);
+        (new GDQuanLyNhanVien()).setVisible(true);
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
@@ -419,5 +418,5 @@ public class ThemNhanVien extends javax.swing.JFrame {
     private void radioNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioNamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_radioNamActionPerformed
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 }

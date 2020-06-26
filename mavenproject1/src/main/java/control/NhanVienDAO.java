@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,9 +32,6 @@ public class NhanVienDAO extends DAO {
         cuaHangDAO = new CuaHangDAO();
     }
 
-    public static void main(String[] args) {
-
-    }
 
     public ArrayList<NhanVien> getAllNVKho() {
         PreparedStatement stm = null;
@@ -136,34 +132,24 @@ public class NhanVienDAO extends DAO {
     }
 
     public List<NhanVien> getNhanVienByName(String name) {
-        String sql = "select *  from [CuaHangHoaQua].[dbo].[NhanVien] inner join [CuaHangHoaQua].[dbo].[Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi where Nguoi.hoTen like '%?%'";
+        String sql = "select *  from [CuaHangHoaQua].[dbo].[NhanVien] inner join [CuaHangHoaQua].[dbo].[Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi where Nguoi.hoTen like '%" + name + "%'";
         PreparedStatement pre = null;
         ResultSet rs = null;
-//        CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
-//        crs.populate(rs);
         List<NhanVien> listNV = new ArrayList<>();
         try {
-            pre.setString(1, name);
             pre = getCon().prepareStatement(sql);
             rs = pre.executeQuery();
+            System.out.println(rs);
             while (rs.next()) {
                 NhanVien nhanVien = resultSet2NhanVien(rs);
                 listNV.add(nhanVien);
             }
         } catch (SQLException ex) {
             Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                pre.close();
-                rs.close();
-                getCon().close();
-            } catch (SQLException ex) {
-                Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        } 
         return listNV;
     }
-
+      
     public NhanVien getNhanVienById(int idNhanVien) {
         String sql = "select * from  [CuaHangHoaQua].[dbo].[NhanVien]  inner join [CuaHangHoaQua].[dbo].[Nguoi] on NhanVien.idNhanVien=Nguoi.idNguoi where idNhanVien = ?";
         PreparedStatement pre = null;
@@ -206,6 +192,7 @@ public class NhanVienDAO extends DAO {
         }
         return 0;
     }
+   
 
     public int deleteNV(NhanVien nv) {
         PreparedStatement pre = null;
@@ -250,4 +237,13 @@ public class NhanVienDAO extends DAO {
         }
         return 0;
     }
+     public static void main(String[] args) {
+        NhanVienDAO nhanVienDAO = new NhanVienDAO();
+        List<NhanVien> listNhanVien = new ArrayList<>();
+        listNhanVien = nhanVienDAO.getNhanVienByName("t");
+        for(NhanVien nhanvien:listNhanVien){
+            System.out.println(nhanvien);
+        }
+//        System.out.println(nhanVienDAO.getNhanVienById(5));
+        }
 }
